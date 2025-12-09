@@ -8,7 +8,6 @@ interface CoffeeCatastropheMissionProps {
     rotation?: [number, number, number]
 }
 
-// Конфигурация выбора
 const CHOICE_CONFIG = {
     honest: {
         text: 'Честно признаться и помочь восстановить',
@@ -56,7 +55,6 @@ export default function CoffeeCatastropheMission({
     const isCompleted = getTaskStatus('coffeeCatastropheMission')
     const totalPoints = getTotalPoints()
 
-    // Обработка завершения
     useEffect(() => {
         if (!isProcessing) return
 
@@ -93,7 +91,6 @@ export default function CoffeeCatastropheMission({
         }
     }, [isProcessing, selectedChoice, completeTask, deactivateTask])
 
-    // Обработчики
     const handleCloseDialog = useCallback(() => {
         if (!isProcessing) {
             setShowDialog(false)
@@ -107,7 +104,6 @@ export default function CoffeeCatastropheMission({
         setIsProcessing(true)
     }, [isProcessing])
 
-    // Обработчики клавиш
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
             if (e.code === 'KeyE' && playerNear && !isCompleted && !showDialog && !isProcessing) {
@@ -125,7 +121,6 @@ export default function CoffeeCatastropheMission({
         return () => window.removeEventListener('keydown', handleKeyPress)
     }, [playerNear, isCompleted, showDialog, isProcessing, activateTask, handleCloseDialog])
 
-    // Стили
     const styles = useMemo(() => ({
         modal: {
             background: 'rgba(0,0,0,0.97)',
@@ -206,7 +201,6 @@ export default function CoffeeCatastropheMission({
         }
     }), [isCompleted, showDialog, isProcessing])
 
-    // Рендер диалога
     const renderDialog = () => (
         <div style={styles.modal}>
             <div style={styles.header}>
@@ -278,7 +272,6 @@ export default function CoffeeCatastropheMission({
         </div>
     )
 
-    // Рендер обработки
     const renderProcessing = () => {
         const choice = selectedChoice ? CHOICE_CONFIG[selectedChoice] : null
 
@@ -327,7 +320,6 @@ export default function CoffeeCatastropheMission({
         )
     }
 
-    // Индикаторы
     const renderEIndicator = () => (
         <Html position={[0, 1, 0]} center>
             <div style={{
@@ -347,7 +339,7 @@ export default function CoffeeCatastropheMission({
 
     return (
         <group position={position} rotation={rotation} ref={missionGroupRef}>
-            {/* Триггер */}
+
             <mesh
                 position={[0, 0, 0]}
                 onPointerEnter={() => {
@@ -365,7 +357,6 @@ export default function CoffeeCatastropheMission({
                 <meshStandardMaterial transparent opacity={0} />
             </mesh>
 
-            {/* UI элементы */}
             {playerNear && !isCompleted && !showDialog && !isProcessing && renderEIndicator()}
 
             {showDialog && !isProcessing && (

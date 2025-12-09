@@ -8,7 +8,6 @@ interface ConfidentialDocumentsMissionProps {
     rotation?: [number, number, number]
 }
 
-// Конфигурация выбора
 const CHOICE_CONFIG = {
     return: {
         text: 'Немедленно вернуть боссу',
@@ -56,7 +55,6 @@ export default function ConfidentialDocumentsMission({
     const isCompleted = getTaskStatus('confidentialDocumentsMission')
     const totalPoints = getTotalPoints()
 
-    // Обработка завершения
     useEffect(() => {
         if (!isProcessing) return
 
@@ -93,7 +91,6 @@ export default function ConfidentialDocumentsMission({
         }
     }, [isProcessing, selectedChoice, completeTask, deactivateTask])
 
-    // Обработчики
     const handleCloseDialog = useCallback(() => {
         if (!isProcessing) {
             setShowDialog(false)
@@ -107,7 +104,6 @@ export default function ConfidentialDocumentsMission({
         setIsProcessing(true)
     }, [isProcessing])
 
-    // Обработчики клавиш
     useEffect(() => {
         const handleKeyPress = (e: KeyboardEvent) => {
             if (e.code === 'KeyE' && playerNear && !isCompleted && !showDialog && !isProcessing) {
@@ -125,7 +121,6 @@ export default function ConfidentialDocumentsMission({
         return () => window.removeEventListener('keydown', handleKeyPress)
     }, [playerNear, isCompleted, showDialog, isProcessing, activateTask, handleCloseDialog])
 
-    // Стили
     const styles = useMemo(() => ({
         modal: {
             background: 'rgba(0,0,0,0.97)',
@@ -208,7 +203,6 @@ export default function ConfidentialDocumentsMission({
         }
     }), [isCompleted, showDialog, isProcessing])
 
-    // Рендер диалога
     const renderDialog = () => (
         <div style={styles.modal}>
             <div style={styles.header}>
@@ -273,7 +267,6 @@ export default function ConfidentialDocumentsMission({
         </div>
     )
 
-    // Рендер обработки
     const renderProcessing = () => {
         const choice = selectedChoice ? CHOICE_CONFIG[selectedChoice] : null
 
@@ -322,7 +315,6 @@ export default function ConfidentialDocumentsMission({
         )
     }
 
-    // Индикаторы
     const renderEIndicator = () => (
         <Html position={[0, 1, 0]} center>
             <div style={{
@@ -342,7 +334,7 @@ export default function ConfidentialDocumentsMission({
 
     return (
         <group position={position} rotation={rotation} ref={missionGroupRef}>
-            {/* Триггер */}
+
             <mesh
                 position={[0, 1, 0]}
                 onPointerEnter={() => {
@@ -360,7 +352,6 @@ export default function ConfidentialDocumentsMission({
                 <meshStandardMaterial transparent opacity={0} />
             </mesh>
 
-            {/* UI элементы */}
             {playerNear && !isCompleted && !showDialog && !isProcessing && renderEIndicator()}
 
             {showDialog && !isProcessing && (
